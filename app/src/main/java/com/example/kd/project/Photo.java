@@ -15,7 +15,6 @@ public class Photo extends AppCompatActivity {
         ImageView p1,p2;
         p1=findViewById(R.id.photo1);
         p2=findViewById(R.id.photo2);
-        p1.
     }
     protected void click1(View view)
     {
