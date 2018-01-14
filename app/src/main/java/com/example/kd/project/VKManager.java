@@ -41,15 +41,7 @@ public class VKManager extends Application {
     private static Bitmap cutImage(Bitmap b, int x, int y, int x1, int y1)
     {
         Bitmap bmp2 = b;
-        Bitmap bmOverlay = Bitmap.createBitmap(x1-x, y1-y, Bitmap.Config.ARGB_8888);
-
-        Paint paint = new Paint();
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-
-        Canvas canvas = new Canvas(bmOverlay);
-        canvas.drawBitmap(bmp2, 0, 0, null);
-        canvas.drawRect(x, y1, x1, y, paint);
-
+        Bitmap bmOverlay = Bitmap.createBitmap(bmp2, x, y, x1-x, y1-y, null, false);
         return bmOverlay;
     }
 
