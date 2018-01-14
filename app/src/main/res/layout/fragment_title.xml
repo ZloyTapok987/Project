@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This is "Fragment A"-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+    <TextView
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:text="Choose"
+        android:id="@+id/button1"
+        android:padding="0dp"
+        android:layout_margin="0dp"
+        android:textColor="#000000"
+        android:textStyle="italic"
+        android:typeface="sans"
+        android:textSize="30dp"
+        android:background="@drawable/edit"
+        />
+    <TextView
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:text="raiting"
+        android:id="@+id/button2"
+        android:padding="0dp"
+        android:layout_margin="0dp"
+        android:textColor="#000000"
+        android:textStyle="italic"
+        android:textSize="30dp"
+        android:background="@drawable/edit"
+        />
+    <TextView
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:text="profile"
+        android:id="@+id/b3"
+        android:padding="0dp"
+        android:layout_margin="0dp"
+        android:textColor="#000000"
+        android:textStyle="italic"
+        android:textSize="30dp"
+        android:background="@drawable/edit"
+        />
+
+</LinearLayout>

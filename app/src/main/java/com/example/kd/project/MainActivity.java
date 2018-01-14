@@ -8,31 +8,37 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.vk.sdk.VKAccessToken;
+import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKSdk;
+import com.vk.sdk.api.VKError;
 
 public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (!VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
+            @Override
+            public void onResult(VKAccessToken res) {
+                Intent intent=new Intent(getBaseContext(),Photo.class);
+                startActivity(intent);
+                // User passed Authorization
+            }
+            @Override
+            public void onError(VKError error) {
+                // User didn't pass Authorization
+            }
+        })) {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button b=(Button)findViewById(R.id.log);
+        VKSdk.login(MainActivity.this);
+    }
 
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Intent intent = new Intent(view.getContext(),MenuVertical.class);
-               //startActivity(intent);
-                VKSdk.login(MainActivity.this);
-            }
-        });
-        TextView t=findViewById(R.id.sign);
-        t.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(view.getContext(),Log.class);
-                startActivity(intent);
-            }
-        });
+    public void click() {
     }
 }
