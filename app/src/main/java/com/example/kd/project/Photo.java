@@ -33,9 +33,9 @@ public class Photo extends AppCompatActivity {
         setContentView(R.layout.activity_photo);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment,fragment1).commit();
 
-        ImageView imgView =(ImageView)findViewById(R.id.photo1);
-        new DownloadImageTask((ImageView)findViewById(R.id.photo1)).execute("https://pp.userapi.com/c639919/v639919222/2ff90/y5ZH9G7Hag0.jpg");
-        new DownloadImageTask((ImageView)findViewById(R.id.photo2)).execute("https://pp.userapi.com/c637218/v637218759/598f5/7XApli2eEek.jpg");
+        VKManager.setPhotoByUserId(this,305663627,(ImageView)findViewById(R.id.photo1));
+        VKManager.setPhotoByUserId(this,285937394,(ImageView)findViewById(R.id.photo2));
+
         ImageView p1=findViewById(R.id.photo1);
         p1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

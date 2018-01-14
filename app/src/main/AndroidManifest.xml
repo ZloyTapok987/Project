@@ -3,7 +3,7 @@
     package="com.example.kd.project">
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <application
-        android:name=".VkLogin"
+        android:name=".VKManager"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -17,12 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Log" />
-        <activity android:name=".MenuVertical" />
         <activity android:name=".Photo" />
         <activity android:name=".Rating" />
         <activity android:name=".Profile" />
-        <activity android:name=".Settings"></activity>
     </application>
 
 </manifest>
