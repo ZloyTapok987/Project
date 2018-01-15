@@ -38,11 +38,8 @@ import java.util.logging.Handler;
  */
 
 public class VKManager extends Application {
-    private static Bitmap cutImage(Bitmap b, double x, double y, double x1, double y1)
-    {
-        Bitmap bmp2 = b;
-        Bitmap bmOverlay = Bitmap.createBitmap(bmp2, (int)x, (int)y, (int)(x1-x), (int)(y1-y), null, false);
-        return bmOverlay;
+    private static Bitmap cutImage(Bitmap b, double x, double y, double x1, double y1) {
+        return Bitmap.createBitmap(b, (int) (x), (int) (y), (int) (x1 - x), (int) (y1 - y), null, false);
     }
 
     static class Request extends VKRequest.VKRequestListener
@@ -83,9 +80,9 @@ public class VKManager extends Application {
         }
     }
 
-    public static void setPhotoByUserId(Context context, String id, ImageView imgView)
+    public static void setPhotoByUserId(Context context, int id, ImageView imgView)
     {
-        VKRequest request = VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, id,VKApiConst.FIELDS, "crop_photo"));
+        VKRequest request = VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, "" + id,VKApiConst.FIELDS, "crop_photo"));
         Bitmap bitmap = null;
         Request t = new Request(context, imgView);
         request.executeWithListener(t);
