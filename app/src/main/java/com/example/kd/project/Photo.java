@@ -6,14 +6,17 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vk.sdk.VKSdk;
@@ -33,8 +36,19 @@ public class Photo extends AppCompatActivity {
         setContentView(R.layout.activity_photo);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment,fragment1).commit();
 
+        TextView t=(TextView)findViewById(R.id.title);
+        Typeface type = Typeface.createFromAsset(getAssets(), "vs.ttf");
+        t.setTypeface(type);
+
+
+
         VKManager.setPhotoByUserId(this,305663627,(ImageView)findViewById(R.id.photo1));
         VKManager.setPhotoByUserId(this,285937394,(ImageView)findViewById(R.id.photo2));
+
+
+        ImageView versus=(ImageView)findViewById(R.id.versus);
+        versus.setImageResource(R.drawable.vs);
+
 
         ImageView p1=findViewById(R.id.photo1);
         p1.setOnLongClickListener(new View.OnLongClickListener() {

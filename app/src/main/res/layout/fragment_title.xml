@@ -18,35 +18,35 @@
         android:textStyle="italic"
         android:typeface="sans"
         android:textSize="30dp"
-        android:background="@drawable/edit"
+        android:background="?android:attr/selectableItemBackground"
         />
     <TextView
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="3"
-        android:text="raiting"
+        android:text="Raiting"
         android:id="@+id/button2"
         android:padding="0dp"
         android:layout_margin="0dp"
         android:textColor="#000000"
         android:textStyle="italic"
         android:textSize="30dp"
-        android:background="@drawable/edit"
+        android:background="?android:attr/selectableItemBackground"
         />
     <TextView
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="3"
-        android:text="profile"
+        android:text="Profile"
         android:id="@+id/b3"
         android:padding="0dp"
         android:layout_margin="0dp"
         android:textColor="#000000"
         android:textStyle="italic"
         android:textSize="30dp"
-        android:background="@drawable/edit"
+        android:background="?android:attr/selectableItemBackground"
         />
 
 </LinearLayout>

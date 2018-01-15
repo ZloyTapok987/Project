@@ -2,6 +2,7 @@ package com.example.kd.project;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -36,6 +37,9 @@ public class TitleFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
         TextView b1 = (TextView) view.findViewById(R.id.button1);
+        Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fon1.ttf");
+        b1.setTypeface(type);
+
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,6 +55,7 @@ public class TitleFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        b2.setTypeface(type);
         TextView b3 = (TextView) view.findViewById(R.id.b3);
         b3.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,5 +64,6 @@ public class TitleFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        b3.setTypeface(type);
     }
 }
