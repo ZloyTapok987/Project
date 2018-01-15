@@ -80,9 +80,9 @@ public class VKManager extends Application {
         }
     }
 
-    public static void setPhotoByUserId(Context context, int id, ImageView imgView)
+    public static void setPhotoByUserId(Context context, String id, ImageView imgView)
     {
-        VKRequest request = VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, "" + id,VKApiConst.FIELDS, "crop_photo"));
+        VKRequest request = VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, id,VKApiConst.FIELDS, "crop_photo"));
         Bitmap bitmap = null;
         Request t = new Request(context, imgView);
         request.executeWithListener(t);
@@ -92,9 +92,9 @@ public class VKManager extends Application {
         @Override
         public void onVKAccessTokenChanged(VKAccessToken oldToken, VKAccessToken newToken) {
             if (newToken == null) {
-                Intent intent = new Intent(VKManager.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                //Intent intent = new Intent(VKManager.this, MainActivity.class);
+                //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                //startActivity(intent);
             }
         }
     };
