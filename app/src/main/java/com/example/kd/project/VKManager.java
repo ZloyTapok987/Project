@@ -38,10 +38,10 @@ import java.util.logging.Handler;
  */
 
 public class VKManager extends Application {
-    private static Bitmap cutImage(Bitmap b, int x, int y, int x1, int y1)
+    private static Bitmap cutImage(Bitmap b, double x, double y, double x1, double y1)
     {
         Bitmap bmp2 = b;
-        Bitmap bmOverlay = Bitmap.createBitmap(bmp2, x, y, x1-x, y1-y, null, false);
+        Bitmap bmOverlay = Bitmap.createBitmap(bmp2, (int)x, (int)y, (int)(x1-x), (int)(y1-y), null, false);
         return bmOverlay;
     }
 
@@ -64,17 +64,17 @@ public class VKManager extends Application {
                 final VKApiPhoto p = new VKApiPhoto(obj.getJSONObject("photo"));
 
                 JSONObject object = obj.getJSONObject("crop");
-                final int x = object.getInt("x");
-                final int y = object.getInt("y");
-                final int x1 = object.getInt("x2");
-                final int y1 = object.getInt("y2");
+                final double x = object.getDouble("x");
+                final double y = object.getDouble("y");
+                final double x1 = object.getDouble("x2");
+                final double y1 = object.getDouble("y2");
 
                 Bitmap bitmap = new Downloader().execute(p.photo_2560).get(); //Picasso.with(context).load(p.photo_2560).get();
 
-                bitmap = cutImage(bitmap, bitmap.getWidth() / 100 * x,
-                        bitmap.getHeight() / 100 * y,
-                        bitmap.getWidth() / 100 * x1,
-                        bitmap.getHeight() / 100 * y1);
+                bitmap = cutImage(bitmap, bitmap.getWidth() / 100.0 * x,
+                        bitmap.getHeight() / 100.0 * y,
+                        bitmap.getWidth() / 100.0 * x1,
+                        bitmap.getHeight() / 100.0 * y1);
                 w.setImageBitmap(bitmap);
             } catch (Exception e)
             {
@@ -83,9 +83,9 @@ public class VKManager extends Application {
         }
     }
 
-    public static void setPhotoByUserId(Context context, int id, ImageView imgView)
+    public static void setPhotoByUserId(Context context, String id, ImageView imgView)
     {
-        VKRequest request = VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, "" + id,VKApiConst.FIELDS, "crop_photo"));
+        VKRequest request = VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, id,VKApiConst.FIELDS, "crop_photo"));
         Bitmap bitmap = null;
         Request t = new Request(context, imgView);
         request.executeWithListener(t);
