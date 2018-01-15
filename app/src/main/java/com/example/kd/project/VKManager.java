@@ -38,7 +38,7 @@ import java.util.logging.Handler;
  */
 
 public class VKManager extends Application {
-    private static Bitmap cutImage(Bitmap b, double x, double y, double x1, double y1) {
+    static Bitmap cutImage(Bitmap b, double x, double y, double x1, double y1) {
         return Bitmap.createBitmap(b, (int) (x), (int) (y), (int) (x1 - x), (int) (y1 - y), null, false);
     }
 
@@ -67,18 +67,8 @@ public class VKManager extends Application {
                 final double y = object.getDouble("y");
                 final double x1 = object.getDouble("x2");
                 final double y1 = object.getDouble("y2");
-
-                Bitmap bitmap = new Downloader().execute(p.photo_2560).get();
-
-                bitmap = cutImage(bitmap, bitmap.getWidth() / 100.0 * x,
-                        bitmap.getHeight() / 100.0 * y,
-                        bitmap.getWidth() / 100.0 * x1,
-                        bitmap.getHeight() / 100.0 * y1);
-                if(defH == null || defW == null) {
-                    w.setImageBitmap(bitmap);
-                    return;
-                }
-                w.setImageBitmap(Bitmap.createScaledBitmap(bitmap, defW, defH, true));
+                Downloader downloader = new Downloader(w, defW, defH, x,y,x1,y1);
+                downloader.execute(p.photo_2560);
             } catch (Exception e)
             {
                 e.printStackTrace();

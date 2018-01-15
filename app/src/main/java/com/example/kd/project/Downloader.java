@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.widget.ImageView;
 
 import java.io.InputStream;
 
@@ -11,19 +12,18 @@ import java.io.InputStream;
  * Created by Alex on 14.01.2018.
  */
 public class Downloader extends AsyncTask<String, Void, Bitmap> {
+    private ImageView w;
+    private Integer defW,defH;
+    private double x,y,x1,y1;
 
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-        // Create a progressdialog
-        /* mProgressDialog = new ProgressDialog(MainActivity.this);
-        // Set progressdialog title
-        mProgressDialog.setTitle("Download Image Tutorial");
-        // Set progressdialog message
-        mProgressDialog.setMessage("Loading...");
-        mProgressDialog.setIndeterminate(false);
-        // Show progressdialog
-        mProgressDialog.show();*/
+    public Downloader(ImageView w, Integer defW, Integer defH, double x, double y, double x1, double y1) {
+        this.w = w;
+        this.defW = defW;
+        this.defH = defH;
+        this.x = x;
+        this.y = y;
+        this.x1 = x1;
+        this.y1 = y1;
     }
 
     @Override
@@ -33,10 +33,14 @@ public class Downloader extends AsyncTask<String, Void, Bitmap> {
 
         Bitmap bitmap = null;
         try {
-            // Download Image from URL
             InputStream input = new java.net.URL(imageURL).openStream();
-            // Decode Bitmap
             bitmap = BitmapFactory.decodeStream(input);
+            bitmap = VKManager.cutImage(bitmap, bitmap.getWidth() / 100.0 * x,
+                    bitmap.getHeight() / 100.0 * y,
+                    bitmap.getWidth() / 100.0 * x1,
+                    bitmap.getHeight() / 100.0 * y1);
+            if(defH != null && defW != null)
+                bitmap = Bitmap.createScaledBitmap(bitmap, defW, defH, true);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -45,9 +49,6 @@ public class Downloader extends AsyncTask<String, Void, Bitmap> {
 
     @Override
     protected void onPostExecute(Bitmap result) {
-        // Set the bitmap into ImageView
-        //image.setImageBitmap(result);
-        // Close progressdialog
-        //mProgressDialog.dismiss();
+        w.setImageBitmap(result);
     }
 }
