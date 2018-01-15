@@ -1,50 +1,60 @@
 package com.example.kd.project;
 
-import android.content.Context;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.kd.project.R;
+
 import java.util.ArrayList;
+import java.util.List;
 
-public class MyAdapter extends BaseAdapter
-{
-    Context ctx;
-    LayoutInflater lInflater;
-    ArrayList<User> obj;
-    MyAdapter(Context context, ArrayList<User> products) {
-        ctx = context;
-        obj = products;
-        lInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.PersonViewHolder>{
+    ArrayList<User> users;
+    MyAdapter(ArrayList<User> users){
+        this.users = users;
     }
     @Override
-    public int getCount() {
-        return obj.size();
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
     }
-
     @Override
-    public Object getItem(int i) {
-        return obj.get(i);
+    public PersonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
+        PersonViewHolder pvh = new PersonViewHolder(v);
+        return pvh;
     }
 
     @Override
-    public long getItemId(int i) {
-        return i;
+    public void onBindViewHolder(PersonViewHolder holder, int i) {
+        holder.UserName.setText((users.get(i).getUserName()));
+        holder.MMR.setText((users.get(i)).getMMR());
+        
+        VKManager.setPhotoByUserId(holder.view.getContext(),(users.get(i)).getId(),(ImageView)holder.view.findViewById(R.id.person_photo),160,160);
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        if (view == null) {
-            view = lInflater.inflate(R.layout.item, viewGroup, false);
+    public int getItemCount() {
+        return users.size();
+    }
+
+    public static class PersonViewHolder extends RecyclerView.ViewHolder {
+        CardView cv;
+        TextView UserName;
+        TextView MMR;
+        ImageView personPhoto;
+        View view;
+        PersonViewHolder(View itemView) {
+            super(itemView);
+            cv = (CardView)itemView.findViewById(R.id.cv);
+            UserName = (TextView)itemView.findViewById(R.id.person_name);
+            MMR = (TextView)itemView.findViewById(R.id.person_age);
+            personPhoto = (ImageView)itemView.findViewById(R.id.person_photo);
+            view=itemView;
         }
-        User user=(User)getItem(i);
-        ((TextView)view.findViewById(R.id.postion)).setText(""+i);
-        ((TextView)view.findViewById(R.id.UserName)).setText(user.getUserName());
-        ((TextView)view.findViewById(R.id.MMR)).setText(user.getMMR());
-        new DownloadImageTask((ImageView)view.findViewById(R.id.miniphoto)).execute(user.getUrl());
-        return view;
     }
 }

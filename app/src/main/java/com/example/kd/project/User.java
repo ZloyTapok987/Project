@@ -8,7 +8,7 @@ public class User
 {
     String UserName=new String();
     String MMR=new String();
-    String url=new String();
+    String id=new String();
     VKAccessToken res;
     public void UserName(String userName)
     {
@@ -19,9 +19,9 @@ public class User
     {
         this.MMR=MMR;
     }
-    public void url(String url)
+    public void Id(String id)
     {
-        this.url=url;
+        this.id=id;
     }
     public String getUserName()
     {
@@ -31,8 +31,8 @@ public class User
     {
         return this.MMR;
     }
-    public String getUrl()
+    public String getId()
     {
-        return this.url;
+        return this.id;
     }
 }

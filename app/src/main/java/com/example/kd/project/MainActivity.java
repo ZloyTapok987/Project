@@ -7,11 +7,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.VKError;
+
+import static com.vk.sdk.VKSdk.LoginState.LoggedIn;
+import static com.vk.sdk.VKSdk.LoginState.LoggedOut;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -36,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        VKSdk.login(MainActivity.this);
+        VKSdk.login(this);
     }
 
     public void click() {
