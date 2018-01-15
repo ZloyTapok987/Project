@@ -20,6 +20,12 @@
         android:textSize="30dp"
         android:background="?android:attr/selectableItemBackground"
         />
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/vk_black"
+        >
+    </View>
     <TextView
         android:gravity="center"
         android:layout_width="match_parent"
@@ -34,6 +40,12 @@
         android:textSize="30dp"
         android:background="?android:attr/selectableItemBackground"
         />
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/vk_black"
+        >
+    </View>
     <TextView
         android:gravity="center"
         android:layout_width="match_parent"

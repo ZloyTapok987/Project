@@ -28,8 +28,8 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     }
 
     protected void onPostExecute(Bitmap result) {
-        bmImage.setMaxHeight(160);
-        bmImage.setMaxWidth(160);
+        bmImage.setMaxHeight(80);
+        bmImage.setMaxWidth(80);
         bmImage.setImageBitmap(result);
     }
 }
