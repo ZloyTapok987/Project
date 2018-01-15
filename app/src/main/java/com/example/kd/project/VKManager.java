@@ -44,12 +44,14 @@ public class VKManager extends Application {
 
     static class Request extends VKRequest.VKRequestListener
     {
-        Context context;
         ImageView w;
-        Request(Context context, ImageView w) {
-            this.context = context;
+        Integer defW,defH;
+        Request(ImageView w, Integer defW, Integer defH) {
             this.w = w;
+            this.defH = defH;
+            this.defW = defW;
         }
+
         @Override
         public void onComplete(VKResponse response) {
             try {
@@ -66,13 +68,17 @@ public class VKManager extends Application {
                 final double x1 = object.getDouble("x2");
                 final double y1 = object.getDouble("y2");
 
-                Bitmap bitmap = new Downloader().execute(p.photo_2560).get(); //Picasso.with(context).load(p.photo_2560).get();
+                Bitmap bitmap = new Downloader().execute(p.photo_2560).get();
 
                 bitmap = cutImage(bitmap, bitmap.getWidth() / 100.0 * x,
                         bitmap.getHeight() / 100.0 * y,
                         bitmap.getWidth() / 100.0 * x1,
                         bitmap.getHeight() / 100.0 * y1);
-                w.setImageBitmap(bitmap);
+                if(defH == null || defW == null) {
+                    w.setImageBitmap(bitmap);
+                    return;
+                }
+                w.setImageBitmap(Bitmap.createScaledBitmap(bitmap, defW, defH, true));
             } catch (Exception e)
             {
                 e.printStackTrace();
@@ -80,11 +86,10 @@ public class VKManager extends Application {
         }
     }
 
-    public static void setPhotoByUserId(Context context, String id, ImageView imgView)
+    public static void setPhotoByUserId(Context context, String id, ImageView imgView, Integer defW, Integer defH)
     {
         VKRequest request = VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, id,VKApiConst.FIELDS, "crop_photo"));
-        Bitmap bitmap = null;
-        Request t = new Request(context, imgView);
+        Request t = new Request(imgView, defW, defH);
         request.executeWithListener(t);
     }
 
