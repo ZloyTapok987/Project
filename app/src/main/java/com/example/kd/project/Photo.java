@@ -41,8 +41,8 @@ public class Photo extends AppCompatActivity {
         t.setTypeface(type);
 
 
-        VKManager.setPhotoByUserId(this,"305663627",(ImageView)findViewById(R.id.photo1),null,null);
-        VKManager.setPhotoByUserId(this,"285937394",(ImageView)findViewById(R.id.photo2),null,null);
+        VKManager.setPhotoByUserId(this,"305663627",(ImageView)findViewById(R.id.photo1),5,null, null);
+        VKManager.setPhotoByUserId(this,"285937394",(ImageView)findViewById(R.id.photo2),5,null, null);
 
 
         ImageView versus=(ImageView)findViewById(R.id.versus);

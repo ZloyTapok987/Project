@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,26 +24,29 @@ public class MainActivity extends AppCompatActivity {
         if (!VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
             @Override
             public void onResult(VKAccessToken res) {
-                Intent intent=new Intent(getBaseContext(),Photo.class);
-                startActivity(intent);
-                // User passed Authorization
+                goNext();
             }
             @Override
             public void onError(VKError error) {
-                // User didn't pass Authorization
+                // User didn't pass Authorization/
             }
         })) {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
+    void goNext()
+    {
+        Intent intent=new Intent(getBaseContext(),Photo.class);
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        VKSdk.login(this);
-    }
-
-    public void click() {
+        if(!VKSdk.isLoggedIn()) VKSdk.login(MainActivity.this);
+        else goNext();
     }
 }

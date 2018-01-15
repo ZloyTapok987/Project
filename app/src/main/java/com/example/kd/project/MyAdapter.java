@@ -34,7 +34,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.PersonViewHolder>{
         holder.UserName.setText((users.get(i).getUserName()));
         holder.MMR.setText((users.get(i)).getMMR());
         
-        VKManager.setPhotoByUserId(holder.view.getContext(),(users.get(i)).getId(),(ImageView)holder.view.findViewById(R.id.person_photo),160,160);
+        VKManager.setPhotoByUserId(holder.view.getContext(),(users.get(i)).getId(),(ImageView)holder.view.findViewById(R.id.person_photo),2,null,null);
     }
 
     @Override

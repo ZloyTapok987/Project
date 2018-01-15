@@ -45,11 +45,12 @@ public class VKManager extends Application {
     static class Request extends VKRequest.VKRequestListener
     {
         ImageView w;
-        Integer defW,defH;
-        Request(ImageView w, Integer defW, Integer defH) {
+        Integer defW,defH, type;
+        Request(ImageView w, Integer type, Integer defW, Integer defH) {
             this.w = w;
             this.defH = defH;
             this.defW = defW;
+            this.type = type;
         }
 
         @Override
@@ -68,7 +69,8 @@ public class VKManager extends Application {
                 final double x1 = object.getDouble("x2");
                 final double y1 = object.getDouble("y2");
                 Downloader downloader = new Downloader(w, defW, defH, x,y,x1,y1);
-                downloader.execute(p.photo_2560);
+
+                downloader.execute(getPhoto(p,type));
             } catch (Exception e)
             {
                 e.printStackTrace();
@@ -76,11 +78,26 @@ public class VKManager extends Application {
         }
     }
 
-    public static void setPhotoByUserId(Context context, String id, ImageView imgView, Integer defW, Integer defH)
+    public static void setPhotoByUserId(Context context, String id, ImageView imgView, Integer type, Integer defW, Integer defH)
     {
         VKRequest request = VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, id,VKApiConst.FIELDS, "crop_photo"));
-        Request t = new Request(imgView, defW, defH);
+        Request t = new Request(imgView, type, defW, defH);
         request.executeWithListener(t);
+    }
+
+    private static String getPhoto(VKApiPhoto photo, int type)
+    {
+        String ans = null;
+        switch (type)
+        {
+            case 0: { ans = photo.photo_75; break; }
+            case 1: { ans = photo.photo_130; break; }
+            case 2: { ans = photo.photo_604; break; }
+            case 3: { ans = photo.photo_807; break; }
+            case 4: { ans = photo.photo_1280; break; }
+            case 5: { ans = photo.photo_2560; break; }
+        }
+        return ans;
     }
 
     VKAccessTokenTracker vkAccessTokenTracker = new VKAccessTokenTracker() {
