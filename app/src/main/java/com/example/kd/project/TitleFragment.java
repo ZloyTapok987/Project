@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.IntentCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,7 @@ public class TitleFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(view.getContext(),Photo.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         });
@@ -52,6 +54,7 @@ public class TitleFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(view.getContext(),Rating.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         });
@@ -61,6 +64,7 @@ public class TitleFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(view.getContext(),Profile.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
             }
         });

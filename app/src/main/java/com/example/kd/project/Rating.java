@@ -37,22 +37,10 @@ public class Rating extends AppCompatActivity {
         rv.setLayoutManager(llm);
         MyAdapter adapter = new MyAdapter(users);
         rv.setAdapter(adapter);
-        /*
-        MyAdapter myAdapter= new MyAdapter(this, users);
-        ListView lvMain = (ListView) findViewById(R.id.list);
-        lvMain.setAdapter(myAdapter);
-        lvMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent=new Intent(view.getContext(),Profile.class);
-                startActivity(intent);
-            }
-        });
-        */
     }
 
     private void fillData() {
-        for(int i=0;i<10;++i)
+        for(int i=0;i<3;++i)
         {
             User user=new User();
             user.Id("305663627");

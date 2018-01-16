@@ -55,17 +55,18 @@
             android:scaleType="fitXY"
            />
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/vk_black"
-            >
-        </View>
     </LinearLayout>
-    <FrameLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="18"
-        android:id="@+id/fragment">
-    </FrameLayout>
+        android:layout_height="2dp"
+        android:background="@color/vk_black"
+        >
+    </View>
+   <FrameLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_weight="22"
+       android:id="@+id/fragment">
+
+   </FrameLayout>
 </LinearLayout>
