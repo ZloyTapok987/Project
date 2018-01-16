@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.PersistableBundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -31,11 +32,10 @@ import java.net.URL;
 
 public class Photo extends AppCompatActivity {
     TitleFragment fragment1=new TitleFragment();
+    static String id1 = null, id2 = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
-        //VKSdk.login(Photo.this);
         setContentView(R.layout.activity_photo);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment,fragment1).commit();
 
@@ -43,10 +43,7 @@ public class Photo extends AppCompatActivity {
         Typeface type = Typeface.createFromAsset(getAssets(), "vs.ttf");
         t.setTypeface(type);
 
-
-        VKManager.setPhotoByUserId(this,"305663627",(ImageView)findViewById(R.id.photo1),5,null, null);
-        VKManager.setPhotoByUserId(this,"285937394",(ImageView)findViewById(R.id.photo2),5,null, null);
-
+        updatePhotos();
 
         ImageView versus=(ImageView)findViewById(R.id.versus);
         versus.setImageResource(R.drawable.vs);
@@ -56,27 +53,27 @@ public class Photo extends AppCompatActivity {
         p1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "SanyaBog",
-                        Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-                return false;
+                boolean ans = Client.getInstance().selected(id1, id2, 0);
+                if(ans) updatePhotos();
+                return ans;
             }
         });
         ImageView p2=findViewById(R.id.photo2);
         p2.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "VovaBog",
-                        Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-                return false;
+                boolean ans = Client.getInstance().selected(id1, id2, 1);
+                if(ans) updatePhotos();
+                return ans;
             }
         });
-        //getFragmentManager().beginTransaction().replace(R.id.fragment);
+    }
+
+    void updatePhotos()
+    {
+        id1 = null; id2 = null;
+        ((ImageView)findViewById(R.id.photo1)).setImageBitmap(null); ((ImageView)findViewById(R.id.photo2)).setImageBitmap(null);
+        Client.getInstance().setPhotosToCompare(this,(ImageView)findViewById(R.id.photo1), (ImageView)findViewById(R.id.photo2));
     }
 }
 

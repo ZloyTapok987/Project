@@ -35,10 +35,12 @@ public class Downloader extends AsyncTask<String, Void, Bitmap> {
         try {
             InputStream input = new java.net.URL(imageURL).openStream();
             bitmap = BitmapFactory.decodeStream(input);
+
             bitmap = VKManager.cutImage(bitmap, bitmap.getWidth() / 100.0 * x,
                     bitmap.getHeight() / 100.0 * y,
                     bitmap.getWidth() / 100.0 * x1,
                     bitmap.getHeight() / 100.0 * y1);
+
             if(defH != null && defW != null)
                 bitmap = Bitmap.createScaledBitmap(bitmap, defW, defH, true);
         } catch (Exception e) {
