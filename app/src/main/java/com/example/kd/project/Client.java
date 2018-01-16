@@ -22,7 +22,7 @@ import java.util.logging.SocketHandler;
  */
 
 public class Client {
-    private final String IP = "10.23.44.152";
+    private final String IP = "192.168.43.52";
     private static Client client = null;
     private Client() {
 
