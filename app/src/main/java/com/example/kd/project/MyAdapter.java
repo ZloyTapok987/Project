@@ -1,5 +1,6 @@
 package com.example.kd.project;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -14,29 +15,30 @@ import com.example.kd.project.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.PersonViewHolder>{
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     ArrayList<User> users;
-    MyAdapter(ArrayList<User> users){
-        this.users = users;
-    }
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-    }
-    @Override
-    public PersonViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
-        PersonViewHolder pvh = new PersonViewHolder(v);
-        return pvh;
+
+    MyAdapter(ArrayList<User> users)
+    {
+        this.users=users;
     }
 
     @Override
-    public void onBindViewHolder(PersonViewHolder holder, int i) {
-        holder.UserName.setText((users.get(i).getUserName()));
-        holder.MMR.setText((users.get(i)).getMMR());
+    public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
+
+        ViewHolder vh = new ViewHolder(v);
+        return vh;
+    }
+
+    @Override
+    public void onBindViewHolder(MyAdapter.ViewHolder holder, int i) {
         int z=i+1;
-        ((TextView)holder.view.findViewById(R.id.place)).setText(""+z);
-        VKManager.setPhotoByUserId(holder.view.getContext(),(users.get(i)).getId(),(ImageView)holder.view.findViewById(R.id.person_photo),2,180,180);
+        holder.place.setText(z+"");
+        User a=users.get(i);
+        holder.name.setText(a.getUserName());
+        holder.MMR.setText(a.getMMR());
+        VKManager.setPhotoByUserId(holder.c,"305663627",holder.photo,2,180, 180);
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,19 +54,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.PersonViewHolder>{
         return users.size();
     }
 
-    public static class PersonViewHolder extends RecyclerView.ViewHolder {
-        CardView cv;
-        TextView UserName;
-        TextView MMR;
-        ImageView personPhoto;
-        View view;
-        PersonViewHolder(View itemView) {
-            super(itemView);
-            cv = (CardView)itemView.findViewById(R.id.cv);
-            UserName = (TextView)itemView.findViewById(R.id.person_name);
-            MMR = (TextView)itemView.findViewById(R.id.person_age);
-            personPhoto = (ImageView)itemView.findViewById(R.id.person_photo);
-            view=itemView;
+    public class ViewHolder extends RecyclerView.ViewHolder{
+
+        public Context c;
+        public TextView place;
+        public ImageView photo;
+        public TextView name;
+        public TextView MMR;
+        public View view;
+        public ViewHolder(View v) {
+            super(v);
+            this.c=v.getContext();
+            this.place=(TextView)v.findViewById(R.id.place);
+            this.photo=(ImageView)v.findViewById(R.id.photo);
+            this.name=(TextView)v.findViewById(R.id.name);
+            this.MMR=(TextView)v.findViewById(R.id.mmr);
+            this.view=v;
         }
     }
 }

@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Project</string>
+    <string name="text_schedules">text_schedules</string>
     <integer name="com_vk_sdk_AppId">6330032</integer>
 </resources>

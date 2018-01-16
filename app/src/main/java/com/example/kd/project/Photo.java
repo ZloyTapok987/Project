@@ -1,6 +1,7 @@
 package com.example.kd.project;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -31,14 +32,15 @@ import java.net.URL;
 
 public class Photo extends AppCompatActivity {
     TitleFragment fragment1=new TitleFragment();
+    Context c;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
         //VKSdk.login(Photo.this);
         setContentView(R.layout.activity_photo);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment,fragment1).commit();
-
+        //getSupportFragmentManager().beginTransaction().replace(R.id.fragment,fragment1).commit();
+        c=this;
         TextView t=(TextView)findViewById(R.id.title);
         Typeface type = Typeface.createFromAsset(getAssets(), "vs.ttf");
         t.setTypeface(type);
@@ -76,7 +78,35 @@ public class Photo extends AppCompatActivity {
                 return false;
             }
         });
-        //getFragmentManager().beginTransaction().replace(R.id.fragment);
+
+
+        BottomNavigationView bottomNavigationView=(BottomNavigationView)findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.choose: {
+                        Intent intent=new Intent(c,Photo.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        c.startActivity(intent);
+                        break;
+                    }
+                    case R.id.rating:{
+                        Intent intent=new Intent(c,Rating.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        c.startActivity(intent);
+                        break;
+                    }
+                    case R.id.profile:{
+                        Intent intent=new Intent(c,Profile.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        c.startActivity(intent);
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
     }
 }
 
