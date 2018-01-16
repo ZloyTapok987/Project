@@ -108,20 +108,19 @@ public class Client {
             this.activity = activity;
         }
 
-        // TODO: comebackIt
         @Override
         public void run() {
             try {
-                /*Socket socket = new Socket(IP, 8989);
+                Socket socket = new Socket(IP, 8989);
                 PrintWriter pw = new PrintWriter(socket.getOutputStream());
                 Scanner sc = new Scanner(socket.getInputStream());
                 pw.print(VKManager.token.userId + " getIDs "); pw.flush();
-                */String[] ans = new String[2];
-                Photo.id1 = ans[0] = "259211402";//sc.next();
-                Photo.id2 = ans[1] = "259211402";//sc.next();
+                String[] ans = new String[2];
+                Photo.id1 = ans[0] = sc.next();
+                Photo.id2 = ans[1] = sc.next();
                 VKManager.setPhotoByUserId(activity, ans[0], v1, 5,null,null);
                 VKManager.setPhotoByUserId(activity, ans[1], v2, 5,null,null);
-                //socket.close();
+                socket.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
