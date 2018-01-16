@@ -38,6 +38,8 @@ import java.util.logging.Handler;
  */
 
 public class VKManager extends Application {
+    public static VKAccessToken token;
+
     static Bitmap cutImage(Bitmap b, double x, double y, double x1, double y1) {
         return Bitmap.createBitmap(b, (int) (x), (int) (y), (int) (x1 - x), (int) (y1 - y), null, false);
     }
@@ -87,15 +89,15 @@ public class VKManager extends Application {
 
     private static String getPhoto(VKApiPhoto photo, int type)
     {
-        String ans = null;
+        String ans = "";
         switch (type)
         {
-            case 0: { ans = photo.photo_75; break; }
-            case 1: { ans = photo.photo_130; break; }
-            case 2: { ans = photo.photo_604; break; }
-            case 3: { ans = photo.photo_807; break; }
-            case 4: { ans = photo.photo_1280; break; }
-            case 5: { ans = photo.photo_2560; break; }
+            case 5: { ans = photo.photo_2560; if(!ans.equals("")) break; }
+            case 4: { ans = photo.photo_1280; if(!ans.equals("")) break; }
+            case 3: { ans = photo.photo_807; if(!ans.equals("")) break; }
+            case 2: { ans = photo.photo_604; if(!ans.equals("")) break; }
+            case 1: { ans = photo.photo_130; if(!ans.equals("")) break; }
+            case 0: { ans = photo.photo_75; if(!ans.equals("")) break; }
         }
         return ans;
     }

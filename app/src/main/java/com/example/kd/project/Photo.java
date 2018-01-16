@@ -1,7 +1,6 @@
 package com.example.kd.project;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -10,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.PersistableBundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -32,23 +32,18 @@ import java.net.URL;
 
 public class Photo extends AppCompatActivity {
     TitleFragment fragment1=new TitleFragment();
-    Context c;
+    static String id1 = null, id2 = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
-        //VKSdk.login(Photo.this);
         setContentView(R.layout.activity_photo);
-        //getSupportFragmentManager().beginTransaction().replace(R.id.fragment,fragment1).commit();
-        c=this;
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment,fragment1).commit();
+
         TextView t=(TextView)findViewById(R.id.title);
         Typeface type = Typeface.createFromAsset(getAssets(), "vs.ttf");
         t.setTypeface(type);
 
-
-        VKManager.setPhotoByUserId(this,"305663627",(ImageView)findViewById(R.id.photo1),5,null, null);
-        VKManager.setPhotoByUserId(this,"285937394",(ImageView)findViewById(R.id.photo2),5,null, null);
-
+        updatePhotos();
 
         ImageView versus=(ImageView)findViewById(R.id.versus);
         versus.setImageResource(R.drawable.vs);
@@ -58,55 +53,27 @@ public class Photo extends AppCompatActivity {
         p1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "SanyaBog",
-                        Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-                return false;
+                boolean ans = Client.getInstance().selected(id1, id2, 0);
+                if(ans) updatePhotos();
+                return ans;
             }
         });
         ImageView p2=findViewById(R.id.photo2);
         p2.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "VovaBog",
-                        Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-                return false;
+                boolean ans = Client.getInstance().selected(id1, id2, 1);
+                if(ans) updatePhotos();
+                return ans;
             }
         });
+    }
 
-
-        BottomNavigationView bottomNavigationView=(BottomNavigationView)findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.choose: {
-                        Intent intent=new Intent(c,Photo.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        c.startActivity(intent);
-                        break;
-                    }
-                    case R.id.rating:{
-                        Intent intent=new Intent(c,Rating.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        c.startActivity(intent);
-                        break;
-                    }
-                    case R.id.profile:{
-                        Intent intent=new Intent(c,Profile.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        c.startActivity(intent);
-                        break;
-                    }
-                }
-                return false;
-            }
-        });
+    void updatePhotos()
+    {
+        id1 = null; id2 = null;
+        ((ImageView)findViewById(R.id.photo1)).setImageBitmap(null); ((ImageView)findViewById(R.id.photo2)).setImageBitmap(null);
+        Client.getInstance().setPhotosToCompare(this,(ImageView)findViewById(R.id.photo1), (ImageView)findViewById(R.id.photo2));
     }
 }
 
