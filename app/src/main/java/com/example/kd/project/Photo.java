@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.PersistableBundle;
 import android.provider.ContactsContract;
@@ -29,6 +30,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Photo extends AppCompatActivity {
     TitleFragment fragment1=new TitleFragment();

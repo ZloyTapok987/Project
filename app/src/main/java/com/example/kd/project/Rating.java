@@ -33,7 +33,6 @@ public class Rating extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rating);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment,fragment1).commit();
-        fillData();
         c=this;
         RecyclerView rv = (RecyclerView)findViewById(R.id.rv);
         rv.setHasFixedSize(true);
@@ -41,18 +40,6 @@ public class Rating extends AppCompatActivity {
         rv.setLayoutManager(llm);
         MyAdapter adapter = new MyAdapter(users);
         rv.setAdapter(adapter);
-
-
-    }
-
-    private void fillData() {
-        for(int i=0;i<10;++i)
-        {
-            User user=new User();
-            user.Id("305663627");
-            user.UserName("SanyaBog");
-            user.MMR("100500");
-            users.add(user);
-        }
+        Client.getInstance().setTable(adapter);
     }
 }

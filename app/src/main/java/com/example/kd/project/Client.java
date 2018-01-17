@@ -1,28 +1,32 @@
 package com.example.kd.project;
 
 import android.app.Activity;
-import android.content.Context;
-import android.provider.ContactsContract;
-import android.support.annotation.RestrictTo;
-import android.util.Log;
+import android.os.AsyncTask;
+import android.widget.Adapter;
 import android.widget.ImageView;
 
 import com.vk.sdk.VKAccessToken;
-import com.vk.sdk.VKSdk;
+import com.vk.sdk.api.VKApi;
+import com.vk.sdk.api.VKApiConst;
+import com.vk.sdk.api.VKError;
+import com.vk.sdk.api.VKParameters;
+import com.vk.sdk.api.VKRequest;
+import com.vk.sdk.api.VKResponse;
+import com.vk.sdk.api.model.VKApiUser;
+import com.vk.sdk.api.model.VKList;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.SortedMap;
-import java.util.logging.SocketHandler;
 
 /**
  * Created by Alex on 14.01.2018.
  */
 
 public class Client {
-    private final String IP = "192.168.43.52";
+    private final String IP = "10.23.44.99";
     private static Client client = null;
     private Client() {
 
@@ -32,6 +36,69 @@ public class Client {
     {
         if(client == null) client = new Client();
         return client;
+    }
+
+    public void setTable(MyAdapter adapter)
+    {
+        new SetTableClass().execute(adapter);
+    }
+
+    class SetTableClass extends AsyncTask<MyAdapter,String, ArrayList<User>>
+    {
+        class UsernameDownloader extends VKRequest.VKRequestListener
+        {
+            ArrayList<User> users;
+            MyAdapter adapter;
+
+            UsernameDownloader(ArrayList<User> users, MyAdapter adapter)
+            {
+                this.users = users;
+                this.adapter = adapter;
+            }
+
+            @Override
+            public void onComplete(VKResponse response) {
+                super.onComplete(response);
+                VKList<VKApiUser> users1 = (VKList<VKApiUser>)response.parsedModel;
+                for(int i = 0;i<users1.size();i++)
+                {
+                    User t = users.get(i);
+                    VKApiUser us = users1.get(i);
+                    t.UserName(us.first_name + " " + us.last_name);
+                    users.set(i, t);
+                }
+                adapter.users = users;
+                adapter.notifyDataSetChanged();
+            }
+        }
+
+        @Override
+        protected ArrayList<User> doInBackground(MyAdapter... voids) {
+            try {
+                Socket socket = new Socket(IP, 8989);
+                PrintWriter pw = new PrintWriter(socket.getOutputStream());
+                Scanner sc = new Scanner(socket.getInputStream());
+                pw.print(VKManager.token.userId + " getTop "); pw.flush();
+                int n = sc.nextInt();
+                ArrayList<User> users = new ArrayList<>(n);
+                StringBuilder ids = new StringBuilder();
+                for(int i = 0;i<n;i++)
+                {
+                    User e = new User();
+                    e.Id(sc.next()); e.MMR(sc.next());
+                    users.add(e);
+                    if(i!=0) ids.append(",").append(e.getId());
+                    else ids.append(e.getId());
+                }
+                VKRequest request = VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, ids.toString()));
+                request.executeWithListener(new UsernameDownloader(users, voids[0]));
+                socket.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 
     public void login(VKAccessToken token) {
@@ -83,7 +150,7 @@ public class Client {
             try {
                 Socket socket = new Socket(IP, 8989);
                 PrintWriter pw = new PrintWriter(socket.getOutputStream());
-                pw.print(VKManager.token.userId + " results " + id1 + " " + id2 + " " + winner); pw.flush();
+                pw.print(VKManager.token.userId + " results " + id1 + " " + id2 + " " + winner + " "); pw.flush();
                 socket.close();
             } catch (IOException e) {
                 e.printStackTrace();
