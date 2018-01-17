@@ -2,8 +2,10 @@ package com.example.kd.project;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kd.project.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +41,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         User a=users.get(i);
         holder.name.setText(a.getUserName());
         holder.MMR.setText(a.getMMR());
-        VKManager.setPhotoByUserId(holder.c,"305663627",holder.photo,2,180, 180);
+
+        Picasso.with(holder.c).load(R.drawable.doshik).resize(180,180).into(holder.photo);
+
+        Log.d("asd", "" + i);
+
+        VKManager.setPhotoByUserId(holder.c,users.get(i).getId(),holder.photo,2,180, 180);
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,6 +57,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         });
     }
 
+
+    
     @Override
     public int getItemCount() {
         return users.size();
