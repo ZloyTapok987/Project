@@ -30,7 +30,6 @@ public class TitleFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
-        // Inflate the xml file for the fragment
         return inflater.inflate(R.layout.fragment_title, parent, false);
     }
 

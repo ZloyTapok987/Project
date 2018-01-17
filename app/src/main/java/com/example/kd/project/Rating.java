@@ -32,7 +32,7 @@ public class Rating extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rating);
-        //getSupportFragmentManager().beginTransaction().replace(R.id.fragmentrating,fragment1).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment,fragment1).commit();
         fillData();
         c=this;
         RecyclerView rv = (RecyclerView)findViewById(R.id.rv);
@@ -42,33 +42,6 @@ public class Rating extends AppCompatActivity {
         MyAdapter adapter = new MyAdapter(users);
         rv.setAdapter(adapter);
 
-        BottomNavigationView bottomNavigationView=(BottomNavigationView)findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.choose: {
-                        Intent intent=new Intent(c,Photo.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        c.startActivity(intent);
-                        break;
-                    }
-                    case R.id.rating:{
-                        Intent intent=new Intent(c,Rating.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        c.startActivity(intent);
-                        break;
-                    }
-                    case R.id.profile:{
-                        Intent intent=new Intent(c,Profile.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        c.startActivity(intent);
-                        break;
-                    }
-                }
-                return false;
-            }
-        });
 
     }
 
