@@ -1,9 +1,11 @@
 package com.example.kd.project;
 
 import android.app.Activity;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.widget.Adapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.api.VKApi;
@@ -38,6 +40,43 @@ public class Client {
         return client;
     }
 
+    public void setProfile(TextView view, ImageView img,String id)
+    {
+        new SetProfileClass(view,img,id).start();
+    }
+
+    class SetProfileClass extends Thread
+    {
+        ImageView img;
+        TextView view1;
+        String id;
+
+        public SetProfileClass(TextView view1, ImageView img, String id) {
+            this.view1 = view1;
+            this.id = id;
+            this.img = img;
+        }
+
+        @Override
+        public void run() {
+            try {
+                Socket socket = new Socket(IP, 8989);
+                PrintWriter pw = new PrintWriter(socket.getOutputStream());
+                Scanner sc = new Scanner(socket.getInputStream());
+                pw.print(VKManager.token.userId + " getMMR " + id + " "); pw.flush();
+                ArrayList<User> u = new ArrayList<>(1);
+                User user = new User(); user.MMR(sc.next()); user.Id(id);
+                u.add(user);
+                VKRequest request = VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, id));
+                request.executeWithListener(new UsernameDownloader(u, view1));
+                VKManager.setPhotoByUserId(view1.getContext(), id, img, 3, null, null);
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void setTable(MyAdapter adapter)
     {
         new SetTableClass().execute(adapter);
@@ -45,33 +84,6 @@ public class Client {
 
     class SetTableClass extends AsyncTask<MyAdapter,String, ArrayList<User>>
     {
-        class UsernameDownloader extends VKRequest.VKRequestListener
-        {
-            ArrayList<User> users;
-            MyAdapter adapter;
-
-            UsernameDownloader(ArrayList<User> users, MyAdapter adapter)
-            {
-                this.users = users;
-                this.adapter = adapter;
-            }
-
-            @Override
-            public void onComplete(VKResponse response) {
-                super.onComplete(response);
-                VKList<VKApiUser> users1 = (VKList<VKApiUser>)response.parsedModel;
-                for(int i = 0;i<users1.size();i++)
-                {
-                    User t = users.get(i);
-                    VKApiUser us = users1.get(i);
-                    t.UserName(us.first_name + " " + us.last_name);
-                    users.set(i, t);
-                }
-                adapter.users = users;
-                adapter.notifyDataSetChanged();
-            }
-        }
-
         @Override
         protected ArrayList<User> doInBackground(MyAdapter... voids) {
             try {
@@ -185,8 +197,8 @@ public class Client {
                 String[] ans = new String[2];
                 Photo.id1 = ans[0] = sc.next();
                 Photo.id2 = ans[1] = sc.next();
-                VKManager.setPhotoByUserId(activity, ans[0], v1, 5,null,null);
-                VKManager.setPhotoByUserId(activity, ans[1], v2, 5,null,null);
+                VKManager.setPhotoByUserId(activity, ans[0], v1, 3,null,null);
+                VKManager.setPhotoByUserId(activity, ans[1], v2, 3,null,null);
                 socket.close();
             } catch (Exception e) {
                 e.printStackTrace();

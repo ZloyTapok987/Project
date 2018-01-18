@@ -1,6 +1,10 @@
 package com.example.kd.project;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.util.Log;
@@ -38,11 +42,10 @@ public class MyAdapter extends BaseAdapter {
 
     // элемент по позиции
     @Override
+
     public Object getItem(int position) {
         return users.get(position);
     }
-
-    // id по позиции
     @Override
     public long getItemId(int position) {
         return position;

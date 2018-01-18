@@ -32,7 +32,7 @@ public class Rating extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rating);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment,fragment1).commit();
-        c=this;
+
         myAdapter=new MyAdapter(c,users);
         Client.getInstance().setTable(myAdapter);
         ListView lvMain = (ListView) findViewById(R.id.lvMain);
