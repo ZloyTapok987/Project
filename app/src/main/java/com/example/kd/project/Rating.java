@@ -24,9 +24,8 @@ import java.util.ArrayList;
 public class Rating extends AppCompatActivity {
     ArrayList<User> users= new ArrayList<>();
     TitleFragment fragment1=new TitleFragment();
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    MyAdapter myAdapter;
     Context c;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +33,17 @@ public class Rating extends AppCompatActivity {
         setContentView(R.layout.activity_rating);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment,fragment1).commit();
         c=this;
-        RecyclerView rv = (RecyclerView)findViewById(R.id.rv);
-        rv.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        rv.setLayoutManager(llm);
-        MyAdapter adapter = new MyAdapter(users);
-        rv.setAdapter(adapter);
-        Client.getInstance().setTable(adapter);
+        myAdapter=new MyAdapter(c,users);
+        Client.getInstance().setTable(myAdapter);
+        ListView lvMain = (ListView) findViewById(R.id.lvMain);
+        lvMain.setAdapter(myAdapter);
+        lvMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent=new Intent(view.getContext(),Profile.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+            }
+        });
     }
 }

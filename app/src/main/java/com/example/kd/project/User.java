@@ -1,5 +1,6 @@
 package com.example.kd.project;
 
+import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 import com.vk.sdk.VKAccessToken;
@@ -9,6 +10,7 @@ public class User
     String UserName=new String();
     String MMR=new String();
     String id=new String();
+    Bitmap bitmap=null;
     VKAccessToken res;
     public void UserName(String userName)
     {
