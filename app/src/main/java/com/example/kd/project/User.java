@@ -10,6 +10,7 @@ public class User
     String UserName=new String();
     String MMR=new String();
     String id=new String();
+    Bitmap bitmap=null;
     VKAccessToken res;
     public void UserName(String userName)
     {
