@@ -1,5 +1,6 @@
 package com.example.kd.project;
 
+import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 import com.vk.sdk.VKAccessToken;

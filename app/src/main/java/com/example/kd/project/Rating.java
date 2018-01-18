@@ -33,7 +33,6 @@ public class Rating extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rating);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment,fragment1).commit();
-        c=this;
         RecyclerView rv = (RecyclerView)findViewById(R.id.rv);
         rv.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);

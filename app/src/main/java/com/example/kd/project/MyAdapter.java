@@ -2,6 +2,7 @@ package com.example.kd.project;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -35,7 +36,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(MyAdapter.ViewHolder holder, int i) {
+    public void onBindViewHolder(final MyAdapter.ViewHolder holder, final int i) {
         int z=i+1;
         holder.place.setText(z+"");
         User a=users.get(i);
@@ -46,19 +47,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
         Log.d("asd", "" + i);
 
-        VKManager.setPhotoByUserId(holder.c,users.get(i).getId(),holder.photo,2,180, 180);
+        VKManager.setPhotoByUserId(holder.c, users.get(i).getId(), holder.photo, 2, 180, 180);
+
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(view.getContext(),Profile.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                Log.d("asd", users.get(i).getId());
+                intent.putExtra("id", users.get(i).getId());
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 view.getContext().startActivity(intent);
             }
         });
     }
 
 
-    
+
     @Override
     public int getItemCount() {
         return users.size();
