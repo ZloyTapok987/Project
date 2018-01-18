@@ -6,84 +6,104 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kd.project.R;
+import com.example.kd.project.User;
+import com.example.kd.project.VKManager;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.zip.Inflater;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
+public class MyAdapter extends BaseAdapter {
+    Context ctx;
+    LayoutInflater lInflater;
     ArrayList<User> users;
 
-    MyAdapter(ArrayList<User> users)
-    {
-        this.users=users;
+    MyAdapter(Context context, ArrayList<User> products) {
+        ctx = context;
+        this.users = products;
+        lInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    // кол-во элементов
     @Override
-    public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
-
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
-    }
-
-    @Override
-    public void onBindViewHolder(final MyAdapter.ViewHolder holder, final int i) {
-        int z=i+1;
-        holder.place.setText(z+"");
-        User a=users.get(i);
-        holder.name.setText(a.getUserName());
-        holder.MMR.setText(a.getMMR());
-
-        Picasso.with(holder.c).load(R.drawable.doshik).resize(180,180).into(holder.photo);
-
-        Log.d("asd", "" + i);
-
-        VKManager.setPhotoByUserId(holder.c, users.get(i).getId(), holder.photo, 2, 180, 180);
-
-        holder.view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(view.getContext(),Profile.class);
-                Log.d("asd", users.get(i).getId());
-                intent.putExtra("id", users.get(i).getId());
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                view.getContext().startActivity(intent);
-            }
-        });
-    }
-
-
-
-    @Override
-    public int getItemCount() {
+    public int getCount() {
         return users.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    // элемент по позиции
+    @Override
 
+    public Object getItem(int position) {
+        return users.get(position);
+    }
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    class ViewHolder
+    {
         public Context c;
         public TextView place;
         public ImageView photo;
         public TextView name;
         public TextView MMR;
         public View view;
-        public ViewHolder(View v) {
-            super(v);
-            this.c=v.getContext();
-            this.place=(TextView)v.findViewById(R.id.place);
-            this.photo=(ImageView)v.findViewById(R.id.photo);
-            this.name=(TextView)v.findViewById(R.id.name);
-            this.MMR=(TextView)v.findViewById(R.id.mmr);
-            this.view=v;
+        public ViewHolder() {
         }
     }
+    // пункт списка
+    @Override
+    public View getView(int i, View convertView, ViewGroup parent) {
+        View v = convertView;
+        v = lInflater.inflate(R.layout.item, parent, false);
+        Picasso.with(v.getContext()).load(R.drawable.doshik).resize(180,180).into((ImageView)v.findViewById(R.id.photo));
+        VKManager.setPhotoByUserId(v.getContext(),users.get(i).getId(),(ImageView)v.findViewById(R.id.photo),2,180, 180);
+        User a=users.get(i);
+        ((TextView)v.findViewById(R.id.place)).setText(""+ ++i);
+        ((TextView)v.findViewById(R.id.mmr)).setText(""+a.getMMR());
+        ((TextView)v.findViewById(R.id.name)).setText(""+ a.getUserName());
+        /*
+        ViewHolder holder;
+
+        if (v==null) {
+            v = lInflater.inflate(R.layout.item, parent, false);
+            holder = new ViewHolder();
+            holder.place = (TextView) v.findViewById(R.id.place);
+            holder.name = (TextView) v.findViewById(R.id.name);
+            holder.MMR = (TextView) v.findViewById(R.id.mmr);
+            holder.photo = (ImageView) v.findViewById(R.id.photo);
+            v.setTag(holder);
+        }
+        else
+        {
+            holder=(ViewHolder)v.getTag();
+        }
+        int z=i+1;
+        holder.place.setText(z+"");
+        User a=users.get(i);
+        holder.name.setText(a.getUserName());
+        holder.MMR.setText(a.getMMR());
+        Picasso.with(v.getContext()).load(R.drawable.doshik).resize(180,180).into(holder.photo);
+        if (a.bitmap==null)
+        {
+            VKManager.setPhotoByUserId(ctx,a.getId(),(ImageView) v.findViewById(R.id.photo),0,180, 180);
+            a.bitmap=v.getDrawingCache();
+            users.get(i).bitmap=a.bitmap;
+        }
+        else ((ImageView) v.findViewById(R.id.photo)).setImageBitmap(a.bitmap);
+        */
+        return v;
+    }
+
 }

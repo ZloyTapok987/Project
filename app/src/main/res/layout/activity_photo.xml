@@ -38,12 +38,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="44"
-            android:scaleType="fitXY"
+
             />
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="44"
+            android:layout_weight="55"
             android:id="@+id/versus"
             android:scaleType="center"
             />
@@ -52,7 +52,6 @@
             android:layout_height="match_parent"
             android:id="@+id/photo2"
             android:layout_weight="44"
-            android:scaleType="fitXY"
            />
         </LinearLayout>
     </LinearLayout>
