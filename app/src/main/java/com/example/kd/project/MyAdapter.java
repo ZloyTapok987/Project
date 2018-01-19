@@ -64,15 +64,23 @@ public class MyAdapter extends BaseAdapter {
     }
     // пункт списка
     @Override
-    public View getView(int i, View convertView, ViewGroup parent) {
-        View v = convertView;
-        v = lInflater.inflate(R.layout.item, parent, false);
-        Picasso.with(v.getContext()).load(R.drawable.doshik).resize(180,180).into((ImageView)v.findViewById(R.id.photo));
-        VKManager.setPhotoByUserId(v.getContext(),users.get(i).getId(),(ImageView)v.findViewById(R.id.photo),2,180, 180);
+    public synchronized View getView(int i, View v, ViewGroup parent) {
         User a=users.get(i);
-        ((TextView)v.findViewById(R.id.place)).setText(""+ ++i);
-        ((TextView)v.findViewById(R.id.mmr)).setText(""+a.getMMR());
-        ((TextView)v.findViewById(R.id.name)).setText(""+ a.getUserName());
+        if (a.v==null) {
+            int z=i+1;
+            v = lInflater.inflate(R.layout.item, parent, false);
+            Picasso.with(v.getContext()).load(R.drawable.doshik).resize(180, 180).into((ImageView) v.findViewById(R.id.photo));
+            VKManager.setPhotoByUserId(v.getContext(), users.get(i).getId(), (ImageView) v.findViewById(R.id.photo), 2, 180, 180);
+            ((TextView) v.findViewById(R.id.place)).setText("" + z);
+            ((TextView) v.findViewById(R.id.mmr)).setText("" + a.getMMR());
+            ((TextView) v.findViewById(R.id.name)).setText("" + a.getUserName());
+            (users.get(i)).V(v);
+        }
+        else
+        {
+            v=a.getView();
+        }
+
         /*
         ViewHolder holder;
 

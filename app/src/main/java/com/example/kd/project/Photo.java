@@ -51,7 +51,6 @@ public class Photo extends AppCompatActivity {
         ImageView versus=(ImageView)findViewById(R.id.versus);
         versus.setImageResource(R.drawable.vs);
 
-
         ImageView p1=findViewById(R.id.photo1);
         p1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
