@@ -1,6 +1,7 @@
 package com.example.kd.project;
 
 import android.graphics.Bitmap;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.vk.sdk.VKAccessToken;
@@ -10,13 +11,14 @@ public class User
     String UserName=new String();
     String MMR=new String();
     String id=new String();
-    Bitmap bitmap=null;
+    View v=null;
     VKAccessToken res;
     public void UserName(String userName)
     {
         this.UserName=userName;
     }
     public void Res(){this.res=res;}
+    public void V(View v){this.v=v;}
     public void MMR(String MMR)
     {
         this.MMR=MMR;
@@ -37,4 +39,5 @@ public class User
     {
         return this.id;
     }
+    public View getView() {return this.v;}
 }

@@ -7,7 +7,7 @@
     android:layout_height="fill_parent"
     tools:context="com.example.kd.project.Photo"
     android:orientation="vertical"
-    android:background="#cfd8dc">
+    android:background="#ECEFF1">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -32,27 +32,44 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="6">
-        <ImageView
-            android:id="@+id/photo1"
+        android:layout_weight="6"
+        tools:ignore="Orientation">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="44"
-
-            />
+            android:padding="6dp"
+            >
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/photo1"
+                    android:background="@drawable/design"
+                    android:padding="12dp"
+                    />
+        </LinearLayout>
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="55"
+            android:layout_weight="44"
             android:id="@+id/versus"
             android:scaleType="center"
             />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="44"
+            android:padding="6dp"
+            >
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/photo2"
             android:layout_weight="44"
+            android:background="@drawable/design"
+            android:padding="12dp"
            />
+        </LinearLayout>
         </LinearLayout>
     </LinearLayout>
     <View
