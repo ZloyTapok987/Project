@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKSdk;
@@ -53,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if(VKSdk.isLoggedIn()) goNext();
         setContentView(R.layout.activity_main);
+
+        ImageView img1 = findViewById(R.id.mainBattle);
+        Picasso.with(this).load(R.drawable.main_battle).into(img1);
+
         Button img = (Button) findViewById(R.id.vk);
         img.setOnClickListener(new View.OnClickListener() {
             @Override

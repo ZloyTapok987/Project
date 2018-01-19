@@ -60,7 +60,7 @@ public class Profile extends AppCompatActivity {
         String id1 = getIntent().getStringExtra("id");
         if(id1 == null) id1 = "259211402";
         final String id = id1;
-        Client.getInstance().setProfile(textView1, textView2, imgView, id);
+        //Client.getInstance().setProfile(textView1, textView2, imgView, id);
         imgView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {

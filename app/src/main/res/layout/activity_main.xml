@@ -5,14 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#ffffff">
 
-    <LinearLayout
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="5">
-
-    </LinearLayout>
+        android:layout_weight="5"
+        android:id="@+id/mainBattle"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_margin="8dp"
             android:background="#42688F"
-            android:drawableLeft="@drawable/vk"
+            android:drawableLeft="@drawable/ic_ab_app"
             android:text="Войти через ВКонтакте"
             android:textColor="#ffffffff" />
     </RelativeLayout>
