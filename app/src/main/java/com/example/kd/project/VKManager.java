@@ -11,8 +11,12 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKAccessTokenTracker;
 import com.vk.sdk.VKSdk;
@@ -70,9 +74,20 @@ public class VKManager extends Application {
                 final double y = object.getDouble("y");
                 final double x1 = object.getDouble("x2");
                 final double y1 = object.getDouble("y2");
-                Downloader downloader = new Downloader(w, defW, defH, x,y,x1,y1);
-
-                downloader.execute(getPhoto(p,type));
+                ImageLoader imageLoader = ImageLoader.getInstance(); // Get singleton instance
+                imageLoader.loadImage(getPhoto(p,type), new SimpleImageLoadingListener() {
+                    @Override
+                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                        loadedImage = VKManager.cutImage(loadedImage, loadedImage.getWidth() / 100.0 * x,
+                                loadedImage.getHeight() / 100.0 * y,
+                                loadedImage.getWidth() / 100.0 * x1,
+                                loadedImage.getHeight() / 100.0 * y1);
+                        if(defH != null && defW != null)
+                            loadedImage = Bitmap.createScaledBitmap(loadedImage, defW, defH, true);
+                        final Bitmap img = loadedImage;
+                        w.setImageBitmap(img);
+                    }
+                });
             } catch (Exception e)
             {
                 e.printStackTrace();
@@ -116,6 +131,9 @@ public class VKManager extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
+        ImageLoader.getInstance().init(config);
+
         vkAccessTokenTracker.startTracking();
         VKSdk.initialize(this);
         //Log.d("asda", VKUtil.getCertificateFingerprint(this, this.getPackageName())[0]);
