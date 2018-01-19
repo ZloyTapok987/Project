@@ -40,19 +40,20 @@ public class Client {
         return client;
     }
 
-    public void setProfile(TextView view, ImageView img,String id)
+    public void setProfile(TextView view1, TextView view2, ImageView img,String id)
     {
-        new SetProfileClass(view,img,id).start();
+        new SetProfileClass(view1, view2, img,id).start();
     }
 
     class SetProfileClass extends Thread
     {
         ImageView img;
-        TextView view1;
+        TextView view1, view2;
         String id;
 
-        public SetProfileClass(TextView view1, ImageView img, String id) {
+        public SetProfileClass(TextView view1,TextView view2, ImageView img, String id) {
             this.view1 = view1;
+            this.view2 = view2;
             this.id = id;
             this.img = img;
         }
@@ -68,7 +69,14 @@ public class Client {
                 User user = new User(); user.MMR(sc.next()); user.Id(id);
                 u.add(user);
                 VKRequest request = VKApi.users().get(VKParameters.from(VKApiConst.USER_IDS, id));
-                request.executeWithListener(new UsernameDownloader(u, view1));
+
+                socket.close();
+                socket = new Socket(IP, 8989);
+                pw = new PrintWriter(socket.getOutputStream());
+                sc = new Scanner(socket.getInputStream());
+                pw.print(VKManager.token.userId + " getPlace " + VKManager.token.userId + " "); pw.flush();
+
+                request.executeWithListener(new UsernameDownloader(u, view1, view2, sc.next()));
                 VKManager.setPhotoByUserId(view1.getContext(), id, img, 3, null, null);
                 socket.close();
             } catch (IOException e) {
