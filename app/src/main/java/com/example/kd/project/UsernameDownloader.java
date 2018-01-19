@@ -18,7 +18,8 @@ class UsernameDownloader extends VKRequest.VKRequestListener
 {
     ArrayList<User> users;
     MyAdapter adapter = null;
-    TextView img = null;
+    TextView view1 = null,view2 = null;
+    String pos = null;
 
     UsernameDownloader(ArrayList<User> users, MyAdapter adapter)
     {
@@ -26,10 +27,12 @@ class UsernameDownloader extends VKRequest.VKRequestListener
         this.adapter = adapter;
     }
 
-    UsernameDownloader(ArrayList<User> users, TextView img)
+    UsernameDownloader(ArrayList<User> users, TextView view1, TextView view2, String pos)
     {
         this.users = users;
-        this.img = img;
+        this.view1 = view1;
+        this.view2 = view2;
+        this.pos = pos;
     }
 
     @Override
@@ -43,8 +46,9 @@ class UsernameDownloader extends VKRequest.VKRequestListener
             t.UserName(us.first_name + " " + us.last_name);
             users.set(i, t);
         }
-        if(img != null) {
-            img.setText(users.get(0).UserName + " Рейтинг: " + users.get(0).MMR);
+        if(view1 != null && view2 != null) {
+            view1.setText(users.get(0).UserName + " Рейтинг: " + users.get(0).MMR);
+            view2.setText("Место: " + pos);
         }
         if(adapter != null) {
             adapter.users = users;

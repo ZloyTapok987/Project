@@ -2,6 +2,8 @@ package com.example.kd.project;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -19,8 +21,6 @@ import com.squareup.picasso.Picasso;
 public class Profile extends AppCompatActivity {
 
     TitleFragment fragment1=new TitleFragment();
-    ImageView imgView;
-    TextView textView;
 /*
     @Override
     protected void onStop() {
@@ -53,21 +53,19 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment,fragment1).commit();
-        imgView = (ImageView)findViewById(R.id.photoprofile);
-        textView = findViewById(R.id.usernameMMR);
+        ImageView imgView = (ImageView)findViewById(R.id.photoprofile);
+        TextView textView1 = findViewById(R.id.usernameMMR);
+        TextView textView2 = findViewById(R.id.Position);
         Log.d("asd", "asd");
-        String id = getIntent().getStringExtra("id");
-        if(id == null) id = "259211402";
-        Client.getInstance().setProfile(textView, imgView, id);
+        String id1 = getIntent().getStringExtra("id");
+        if(id1 == null) id1 = "259211402";
+        final String id = id1;
+        Client.getInstance().setProfile(textView1, textView2, imgView, id);
         imgView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "SanyaBog",
-                        Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-                return false;
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com/id" + id)));
+                return true;
             }
         });
     }

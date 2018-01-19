@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
             }
             @Override
             public void onError(VKError error) {
-                // User didn't pass Authorization/
             }
         })) {
             super.onActivityResult(requestCode, resultCode, data);
@@ -51,8 +51,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(VKSdk.isLoggedIn()) goNext();
         setContentView(R.layout.activity_main);
-        if(!VKSdk.isLoggedIn()) VKSdk.login(MainActivity.this);
-        else goNext();
+        Button img = (Button) findViewById(R.id.vk);
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VKSdk.login(MainActivity.this);
+            }
+        });
     }
 }
