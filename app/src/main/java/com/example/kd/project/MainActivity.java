@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             }
             @Override
             public void onError(VKError error) {
-                // User didn't pass Authorization/
+                VKSdk.login(MainActivity.this);
             }
         })) {
             super.onActivityResult(requestCode, resultCode, data);
