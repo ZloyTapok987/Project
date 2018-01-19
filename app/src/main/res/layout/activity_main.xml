@@ -14,16 +14,22 @@
 
     </LinearLayout>
 
-    <Button
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Войти через ВКонтакте"
-        android:id="@+id/vk"
-        android:layout_gravity="center_horizontal"
-        android:background="#36638e"
-        android:layout_margin="8dp"
-        android:textColor="#ffffffff"
-        android:drawableLeft="@drawable/vk"
-        android:layout_weight="18"/>
+        android:layout_weight="20"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp">
+        <Button
+            android:id="@+id/vk"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="8dp"
+            android:background="#42688F"
+            android:drawableLeft="@drawable/vk"
+            android:text="Войти через ВКонтакте"
+            android:textColor="#ffffffff" />
+    </RelativeLayout>
 
 </LinearLayout>
