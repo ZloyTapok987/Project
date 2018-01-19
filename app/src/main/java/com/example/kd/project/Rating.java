@@ -31,6 +31,7 @@ public class Rating extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rating);
+        MainActivity.IsChoose=false;
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment,fragment1).commit();
         myAdapter=new MyAdapter(this,users);
         Client.getInstance().setTable(myAdapter);

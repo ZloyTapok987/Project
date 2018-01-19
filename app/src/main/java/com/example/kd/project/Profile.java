@@ -52,20 +52,29 @@ public class Profile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        MainActivity.IsChoose=false;
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment,fragment1).commit();
         ImageView imgView = (ImageView)findViewById(R.id.photoprofile);
-        TextView textView1 = findViewById(R.id.usernameMMR);
-        TextView textView2 = findViewById(R.id.Position);
+        TextView username = findViewById(R.id.username);
+        TextView mmr=findViewById(R.id.mmr);
+        TextView place = findViewById(R.id.place);
         Log.d("asd", "asd");
         String id1 = getIntent().getStringExtra("id");
         if(id1 == null) id1 = "259211402";
         final String id = id1;
-        //Client.getInstance().setProfile(textView1, textView2, imgView, id);
+        Client.getInstance().setProfile(username, mmr,place, imgView, id);
         imgView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com/id" + id)));
                 return true;
+            }
+        });
+        username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://vk.com/id" + id)));
+                return;
             }
         });
     }

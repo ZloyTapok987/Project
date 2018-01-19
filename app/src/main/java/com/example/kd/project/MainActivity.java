@@ -25,6 +25,7 @@ import static com.vk.sdk.VKSdk.LoginState.LoggedIn;
 import static com.vk.sdk.VKSdk.LoginState.LoggedOut;
 
 public class MainActivity extends AppCompatActivity {
+    static public boolean IsChoose=false;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (!VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
@@ -54,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if(VKSdk.isLoggedIn()) goNext();
         setContentView(R.layout.activity_main);
-
         ImageView img1 = findViewById(R.id.mainBattle);
         Picasso.with(this).load(R.drawable.main_battle).into(img1);
 

@@ -22,6 +22,7 @@
             android:textSize="30sp"
             android:layout_weight="18"
             android:id="@+id/title"
+            android:background="@color/vk_white"
             />
         <View
             android:layout_width="match_parent"
@@ -82,5 +83,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="22"
-        android:id="@+id/fragment"></FrameLayout>
+        android:id="@+id/fragment"
+        android:background="@drawable/button2"
+       ></FrameLayout>
 </LinearLayout>
