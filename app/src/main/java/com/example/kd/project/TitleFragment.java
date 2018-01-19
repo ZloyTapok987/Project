@@ -44,7 +44,7 @@ public class TitleFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(view.getContext(),Photo.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
@@ -53,7 +53,7 @@ public class TitleFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(view.getContext(),Rating.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
@@ -64,7 +64,7 @@ public class TitleFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent=new Intent(view.getContext(),Profile.class);
                 intent.putExtra("id", VKManager.token.userId);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });

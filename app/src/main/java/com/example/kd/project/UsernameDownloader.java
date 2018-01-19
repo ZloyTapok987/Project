@@ -44,7 +44,7 @@ class UsernameDownloader extends VKRequest.VKRequestListener
             users.set(i, t);
         }
         if(img != null) {
-            img.setText(users.get(0).UserName + " MMR: " + users.get(0).MMR);
+            img.setText(users.get(0).UserName + " Рейтинг: " + users.get(0).MMR);
         }
         if(adapter != null) {
             adapter.users = users;
