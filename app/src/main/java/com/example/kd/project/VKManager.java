@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
@@ -74,8 +75,12 @@ public class VKManager extends Application {
                 final double y = object.getDouble("y");
                 final double x1 = object.getDouble("x2");
                 final double y1 = object.getDouble("y2");
-                ImageLoader imageLoader = ImageLoader.getInstance(); // Get singleton instance
-                imageLoader.loadImage(getPhoto(p,type), new SimpleImageLoadingListener() {
+                ImageLoader imageLoader = ImageLoader.getInstance();
+                DisplayImageOptions options = new DisplayImageOptions.Builder()
+                        .cacheOnDisk(true)
+                        .cacheInMemory(true)
+                        .build();
+                imageLoader.loadImage(getPhoto(p,type), options, new SimpleImageLoadingListener() {
                     @Override
                     public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                         loadedImage = VKManager.cutImage(loadedImage, loadedImage.getWidth() / 100.0 * x,
@@ -131,7 +136,7 @@ public class VKManager extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
+        ImageLoaderConfiguration config = ImageLoaderConfiguration.createDefault(this);
         ImageLoader.getInstance().init(config);
 
         vkAccessTokenTracker.startTracking();
