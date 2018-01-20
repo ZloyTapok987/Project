@@ -39,13 +39,15 @@ public class TitleFragment extends Fragment {
         TextView b1 = (TextView) view.findViewById(R.id.button1);
         Typeface type = Typeface.createFromAsset(getActivity().getAssets(), "fon1.ttf");
         b1.setTypeface(type);
-
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(view.getContext(),Photo.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+                if (!MainActivity.IsChoose)
+                {
+                    startActivity(intent);
+                }
             }
         });
         TextView b2 = (TextView) view.findViewById(R.id.button2);

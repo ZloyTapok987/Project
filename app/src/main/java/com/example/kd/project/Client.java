@@ -28,7 +28,7 @@ import java.util.Scanner;
  */
 
 public class Client {
-    private final String IP = "10.23.45.126";
+    private final String IP = "10.23.44.112";
     private static Client client = null;
     private Client() {
 
